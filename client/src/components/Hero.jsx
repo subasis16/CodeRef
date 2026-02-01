@@ -31,15 +31,15 @@ const Hero = () => {
 
       <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center animate-fade-in-up">
         {/* Headline */}
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.1] mb-8 drop-shadow-2xl">
-          Recall anything in <br className="hidden md:block" />
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.1] mb-6 sm:mb-8 drop-shadow-2xl">
+          Recall anything in <br className="hidden sm:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-ossium-accent to-green-400 inline-block transform hover:scale-[1.02] transition-transform duration-300 cursor-default">
             Seconds
           </span>
         </h1>
 
         {/* Description */}
-        <p className="text-lg md:text-xl text-ossium-muted max-w-2xl mb-12 leading-relaxed font-light">
+        <p className="text-base sm:text-lg md:text-xl text-ossium-muted max-w-2xl mb-8 sm:mb-12 leading-relaxed font-light px-2 sm:px-0">
           The coding cheat-sheet and documentation platform designed for developers who build fast.
           Stop context switching. <span className="text-white font-medium">Start shipping.</span>
         </p>
@@ -55,15 +55,15 @@ const Hero = () => {
         </div>
 
         {/* Social Proof / Tech Stack Icons */}
-        <div className="mt-20 pt-10 border-t border-white/5 w-full max-w-4xl">
-          <p className="text-xs text-ossium-muted mb-6 uppercase tracking-[0.2em] font-semibold">Powering developers working with</p>
+        <div className="mt-12 sm:mt-20 pt-8 sm:pt-10 border-t border-white/5 w-full max-w-4xl">
+          <p className="text-[10px] sm:text-xs text-ossium-muted mb-4 sm:mb-6 uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold">Powering developers working with</p>
           <div className="relative w-full overflow-hidden mask-linear-fade">
-            <div className="flex gap-16 items-center whitespace-nowrap animate-scroll w-max">
+            <div className="flex gap-8 sm:gap-16 items-center whitespace-nowrap animate-scroll w-max">
               {/* Duplicate the list to create seamless loop */}
               {[...Array(2)].map((_, i) => (
-                <div key={i} className="flex gap-16 items-center">
+                <div key={i} className="flex gap-8 sm:gap-16 items-center">
                   {['JavaScript', 'TypeScript', 'React', 'Python', 'Go', 'Rust', 'Java', 'C++', 'Swift', 'Kotlin', 'PHP', 'Ruby', 'Dart', 'Solidity', 'HTML5', 'CSS3', 'Docker', 'Kubernetes', 'AWS', 'TensorFlow'].map((tech) => (
-                    <span key={`${tech}-${i}`} className="font-bold text-white text-lg md:text-xl opacity-40 hover:opacity-100 transition-opacity cursor-default select-none">
+                    <span key={`${tech}-${i}`} className="font-bold text-white text-sm sm:text-lg md:text-xl opacity-40 hover:opacity-100 transition-opacity cursor-default select-none">
                       {tech}
                     </span>
                   ))}

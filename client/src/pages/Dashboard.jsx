@@ -62,7 +62,7 @@ const Dashboard = () => {
         {/* Search & Header */}
         <div className="sticky top-0 z-30 bg-ossium-darker/80 backdrop-blur-md pb-6 pt-2">
           <div className="max-w-7xl mx-auto space-y-6">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <button
                   className="md:hidden text-white p-2 -ml-2 hover:bg-white/10 rounded-lg transition-colors"
@@ -72,7 +72,7 @@ const Dashboard = () => {
                 </button>
                 <h1 className="text-2xl font-bold capitalize text-white">{currentTab === 'docs' ? 'Documentation' : currentTab}</h1>
               </div>
-              <div className="relative w-96 group">
+              <div className="relative w-full sm:w-64 md:w-96 group">
                 <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-ossium-muted group-focus-within:text-ossium-accent transition-colors" />
                 <input
                   type="text"

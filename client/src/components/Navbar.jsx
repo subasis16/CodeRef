@@ -42,7 +42,19 @@ const Navbar = () => {
         <Link to="/tools" className="hover:text-ossium-accent transition-colors">Tools</Link>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
+        {/* Mobile Search Button */}
+        <button
+          onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+          className="md:hidden p-2.5 text-ossium-muted hover:text-white transition-colors border border-white/5 rounded-lg hover:bg-white/5"
+          aria-label="Search"
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+
+        {/* Desktop Search Button */}
         <button
           onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
           className="p-2 ml-2 text-ossium-muted hover:text-white transition-colors border border-white/5 rounded-lg hover:bg-white/5 group hidden md:flex items-center gap-2"

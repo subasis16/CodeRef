@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-ossium-darker border-t border-white/5 py-16 px-6 relative z-10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer className="bg-ossium-darker border-t border-white/5 py-12 sm:py-16 px-4 sm:px-6 relative z-10 safe-area-bottom">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
 
         {/* Brand */}
-        <div className="col-span-1 md:col-span-2">
+        <div className="col-span-2 md:col-span-2">
           <Link to="/" className="flex items-center gap-2 mb-6 w-max">
             <div className="w-6 h-6 bg-ossium-accent rounded flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,9 +48,9 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-ossium-muted">
+      <div className="max-w-7xl mx-auto mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-ossium-muted gap-4">
         <p>&copy; {new Date().getFullYear()} Code Ref. All rights reserved.</p>
-        <div className="flex gap-6 mt-4 md:mt-0">
+        <div className="flex gap-6">
           <Link to="/about" className="hover:text-white transition-colors">About</Link>
         </div>
       </div>

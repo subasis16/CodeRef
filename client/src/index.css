@@ -7,10 +7,26 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
   }
 
   body {
     @apply bg-ossium-darker text-ossium-text font-sans antialiased;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Support for notched phones (iPhone X+) */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Touch-friendly minimum sizes for interactive elements */
+  button, a, input, select, textarea {
+    min-height: 44px; /* Apple's recommended touch target */
+  }
+  
+  /* Exception for inline links in text */
+  p a, span a, li a {
+    min-height: auto;
   }
 }
 
@@ -27,6 +43,20 @@
     radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15), transparent 50%);
   filter: blur(80px);
   animation: aurora-move 8s ease-in-out infinite alternate;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .bg-fluid-aurora,
+  .particle,
+  .animate-scroll {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 
 @keyframes aurora-move {
@@ -91,4 +121,73 @@
 
 .animate-scroll:hover {
   animation-play-state: paused;
+}
+
+/* Mobile Navigation Animation */
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.2s ease-out;
+}
+
+/* Mobile-specific scrollbar hiding */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area padding for bottom navigation on iOS */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Mobile card improvements */
+@media (max-width: 640px) {
+  /* Reduce particle count for performance */
+  .particle:nth-child(n+8) {
+    display: none;
+  }
+  
+  /* Improve text readability */
+  body {
+    font-size: 16px; /* Prevent zoom on iOS inputs */
+  }
+  
+  input, select, textarea {
+    font-size: 16px; /* Prevent auto-zoom on iOS */
+  }
+  
+  /* Better touch scrolling */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .particle:nth-child(n+12) {
+    display: none;
+  }
+}
+
+/* Active state for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
 }
