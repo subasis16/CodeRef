@@ -58,7 +58,7 @@ const Dashboard = () => {
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="flex-1 md:ml-64 ml-0 p-4 md:p-8 transition-all duration-300">
+      <main className="flex-1 w-full min-w-0 md:ml-64 ml-0 p-4 md:p-8 transition-all duration-300">
         {/* Search & Header */}
         <div className="sticky top-0 z-30 bg-ossium-darker/80 backdrop-blur-md pb-6 pt-2">
           <div className="max-w-7xl mx-auto space-y-6">
