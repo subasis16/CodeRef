@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +15,10 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isActive = (path) => {
+    return location.pathname === path ? 'text-ossium-accent' : 'text-ossium-muted hover:text-white';
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled
@@ -21,7 +26,7 @@ const Navbar = () => {
         : 'bg-transparent'
         }`}
     >
-      <Link to="/" className="flex items-center gap-3 cursor-pointer">
+      <Link to="/" className="flex items-center gap-3 cursor-pointer shrink-0">
         <div className="w-8 h-8 bg-ossium-accent rounded-lg flex items-center justify-center shadow-[0_0_10px_rgba(202,255,51,0.4)]">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#0a0a0a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -34,15 +39,17 @@ const Navbar = () => {
         <span className="text-white font-bold text-xl tracking-tight">Code Ref</span>
       </Link>
 
-      <div className="hidden md:flex items-center gap-8 text-sm font-medium text-ossium-muted">
-        <Link to="/cheatsheets" className="hover:text-ossium-accent transition-colors">Cheat Sheets</Link>
-        <Link to="/languages" className="hover:text-ossium-accent transition-colors">Languages</Link>
-        <Link to="/roadmap" className="hover:text-ossium-accent transition-colors">Blueprint</Link>
-        <Link to="/errors" className="hover:text-ossium-accent transition-colors">Bugs & Fixes</Link>
-        <Link to="/tools" className="hover:text-ossium-accent transition-colors">Tools</Link>
+      {/* Centered Desktop Navigation - Absolute positioning for strict centering */}
+      {/* Centered Desktop Navigation - Absolute positioning for strict centering */}
+      <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 h-full items-center gap-9 text-sm font-medium">
+        <Link to="/cheatsheets" className={`transition-colors ${isActive('/cheatsheets')}`}>Cheat Sheets</Link>
+        <Link to="/languages" className={`transition-colors ${isActive('/languages')}`}>Languages</Link>
+        <Link to="/roadmap" className={`transition-colors ${isActive('/roadmap')}`}>Blueprint</Link>
+        <Link to="/errors" className={`transition-colors ${isActive('/errors')}`}>Bugs & Fixes</Link>
+        <Link to="/tools" className={`transition-colors ${isActive('/tools')}`}>Tools</Link>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 shrink-0">
         {/* Mobile Search Button */}
         <button
           onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
@@ -80,12 +87,12 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-[#0a0a0a] border-b border-white/10 p-6 flex flex-col gap-4 md:hidden animate-fade-in-down shadow-2xl">
-          <Link to="/cheatsheets" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Cheat Sheets</Link>
-          <Link to="/languages" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Languages</Link>
-          <Link to="/roadmap" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Blueprint</Link>
-          <Link to="/errors" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Bugs & Fixes</Link>
-          <Link to="/tools" className="text-lg font-medium text-ossium-muted hover:text-ossium-accent" onClick={() => setMobileMenuOpen(false)}>Tools</Link>
+        <div className="absolute top-16 left-0 right-0 bg-[#0a0a0a] border-b border-white/10 p-6 flex flex-col gap-4 md:hidden animate-fade-in-down shadow-2xl z-40">
+          <Link to="/cheatsheets" className={`text-lg font-medium ${isActive('/cheatsheets')}`} onClick={() => setMobileMenuOpen(false)}>Cheat Sheets</Link>
+          <Link to="/languages" className={`text-lg font-medium ${isActive('/languages')}`} onClick={() => setMobileMenuOpen(false)}>Languages</Link>
+          <Link to="/roadmap" className={`text-lg font-medium ${isActive('/roadmap')}`} onClick={() => setMobileMenuOpen(false)}>Blueprint</Link>
+          <Link to="/errors" className={`text-lg font-medium ${isActive('/errors')}`} onClick={() => setMobileMenuOpen(false)}>Bugs & Fixes</Link>
+          <Link to="/tools" className={`text-lg font-medium ${isActive('/tools')}`} onClick={() => setMobileMenuOpen(false)}>Tools</Link>
           <div className="h-px bg-white/5 w-full my-2"></div>
           <Link to="/dashboard" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
             Dashboard

@@ -197,43 +197,57 @@ const LanguageNotes = () => {
 
         {/* Content Sections */}
         {data.sections.length > 0 ? (
-          <div className="space-y-12">
+          <div className="space-y-16">
             {data.sections.map((section, index) => (
-              <div key={index} className="group">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded bg-[#caff33]/10 text-[#caff33] flex items-center justify-center font-mono font-bold text-sm border border-[#caff33]/20">
+              <div key={index} className="group relative">
+                {/* Vertical connecting line for timeline effect */}
+                {index !== data.sections.length - 1 && (
+                  <div className="absolute left-[24px] top-12 bottom-[-64px] w-px bg-white/10 group-hover:bg-[#caff33]/30 transition-colors pointer-events-none" />
+                )}
+
+                <div className="flex items-start gap-6 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#1a1a1a] border border-white/10 text-ossium-accent flex items-center justify-center font-mono font-bold text-lg shrink-0 group-hover:border-ossium-accent/50 group-hover:scale-110 transition-all duration-300 shadow-lg z-10">
                     {index + 1 < 10 ? `0${index + 1}` : index + 1}
                   </div>
-                  <h2 className="text-2xl font-bold text-white group-hover:text-[#caff33] transition-colors">
-                    {section.title}
-                  </h2>
-                </div>
+                  <div className="flex-1 pt-1">
+                    <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-ossium-accent transition-colors">
+                      {section.title}
+                    </h2>
 
-                <div className="ml-11 border-l border-white/5 pl-8 py-2">
-                  <p className="text-gray-400 mb-6 text-lg leading-relaxed">
-                    {section.content}
-                  </p>
+                    <p className="text-gray-300 mb-8 text-lg leading-relaxed max-w-4xl">
+                      {section.content}
+                    </p>
 
-                  {section.code && (
-                    <div className="bg-[#111] rounded-xl border border-white/10 p-6 font-mono text-sm relative overflow-hidden group-hover:border-[#caff33]/30 transition-colors">
-                      <div className="absolute top-0 right-0 p-2 bg-white/5 text-[10px] text-gray-500 uppercase font-bold rounded-bl-lg">
-                        Example
+                    {section.code && (
+                      <div className="rounded-xl overflow-hidden border border-white/10 bg-[#0c0c0c] shadow-2xl group-hover:border-white/20 transition-all duration-300">
+                        {/* Terminal Header */}
+                        <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+                          <div className="flex gap-2">
+                            <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50" />
+                            <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50" />
+                            <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50" />
+                          </div>
+                          <span className="text-xs font-mono text-white/30 uppercase tracking-widest">Snippet</span>
+                        </div>
+
+                        <div className="p-6 overflow-x-auto">
+                          <pre className="font-mono text-sm text-gray-200 leading-loose">
+                            <code>{section.code}</code>
+                          </pre>
+                        </div>
                       </div>
-                      <pre className="text-gray-300 overflow-x-auto">
-                        <code>{section.code}</code>
-                      </pre>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="bg-[#111] border border-white/5 rounded-xl p-12 text-center">
-            <FiTerminal className="mx-auto text-gray-600 mb-4" size={48} />
-            <h3 className="text-xl font-bold text-white mb-2">Content Under Development</h3>
-            <p className="text-gray-500">
-              We are working on detailed notes for {data.name}. Check back later!
+          <div className="bg-[#111] border border-white/5 rounded-xl p-16 text-center">
+            <FiTerminal className="mx-auto text-gray-700 mb-6" size={64} />
+            <h3 className="text-2xl font-bold text-white mb-2">Content Under Development</h3>
+            <p className="text-gray-500 max-w-md mx-auto">
+              We are working on detailed notes for {data.name}. This section will be updated soon with examples and best practices.
             </p>
           </div>
         )}
