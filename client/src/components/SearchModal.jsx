@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,14 +8,14 @@ const SearchModal = ({ isOpen, onClose }) => {
 
   // Mock Search Data Base
   const searchData = [
-    { title: 'Node.js Cheat Sheet', type: 'Cheat Sheet', path: '/cheatsheets/nodejs', icon: '🟢' },
-    { title: 'Git Cheat Sheet', type: 'Cheat Sheet', path: '/cheatsheets/git', icon: '🚀' },
-    { title: 'React Hooks', type: 'Cheat Sheet', path: '/cheatsheets/react', icon: '⚛️' },
-    { title: 'Hydration Failed', type: 'Error Fix', path: '/errors', icon: '🐛' },
-    { title: 'Docker Setup', type: 'Tool', path: '/tools', icon: '🐳' },
-    { title: 'AI Refactoring Prompts', type: 'Workflow', path: '/ai', icon: '🤖' },
-    { title: 'JavaScript Syntax', type: 'Language', path: '/languages', icon: '⚡' },
-    { title: 'Python Loops', type: 'Cheat Sheet', path: '/cheatsheets/python', icon: '🐍' },
+    { title: 'Dashboard', type: 'Page', path: '/dashboard', icon: '📊' },
+    { title: 'Cheat Sheets', type: 'Section', path: '/cheatsheets', icon: '📝' },
+    { title: 'Languages', type: 'Section', path: '/languages', icon: '🌐' },
+    { title: 'Tools', type: 'Section', path: '/tools', icon: '🛠️' },
+    { title: 'Errors', type: 'Section', path: '/errors', icon: '🐛' },
+    { title: 'Roadmap', type: 'Page', path: '/roadmap', icon: '🗺️' },
+    { title: 'Setup', type: 'Page', path: '/setup', icon: '⚙️' },
+    { title: 'About', type: 'Page', path: '/about', icon: 'ℹ️' },
   ];
 
   const filteredResults = searchData.filter(item =>
@@ -55,7 +56,7 @@ const SearchModal = ({ isOpen, onClose }) => {
           <input
             type="text"
             autoFocus
-            placeholder="Search for anything..."
+            placeholder="Search for pages..."
             className="flex-1 bg-transparent text-white text-lg placeholder-ossium-muted/50 focus:outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -78,15 +79,13 @@ const SearchModal = ({ isOpen, onClose }) => {
                   <div className="w-8 h-8 flex items-center justify-center bg-white/5 rounded text-lg group-hover:bg-white/10 transition-colors">
                     {result.icon}
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium text-white group-hover:text-ossium-accent transition-colors">
+                  <div className="flex-1 overflow-hidden">
+                    <h4 className="text-sm font-medium text-white group-hover:text-ossium-accent transition-colors truncate">
                       {result.title}
                     </h4>
-                    <p className="text-xs text-ossium-muted">
-                      {result.type}
-                    </p>
+                    <p className="text-xs text-ossium-muted truncate">{result.type}</p>
                   </div>
-                  <svg className="w-4 h-4 text-white/20 group-hover:text-ossium-accent opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4 text-white/20 group-hover:text-ossium-accent opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                   </svg>
                 </button>

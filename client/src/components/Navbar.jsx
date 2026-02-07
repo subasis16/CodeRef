@@ -42,7 +42,7 @@ const Navbar = () => {
       </Link>
 
       {/* Centered Desktop Navigation - Absolute positioning for strict centering */}
-      <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 h-full items-center gap-9 text-sm font-medium">
+      <div className="hidden md:flex absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 items-center gap-9 text-sm font-medium">
         <Link to="/cheatsheets" className={`transition-colors ${isActive('/cheatsheets')}`}>Cheat Sheets</Link>
         <Link to="/languages" className={`transition-colors ${isActive('/languages')}`}>Languages</Link>
         <Link to="/roadmap" className={`transition-colors ${isActive('/roadmap')}`}>Blueprint</Link>

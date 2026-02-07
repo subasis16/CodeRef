@@ -52,6 +52,8 @@ const Footer = () => {
         <p>&copy; {new Date().getFullYear()} Code Ref. All rights reserved.</p>
         <div className="flex gap-6">
           <Link to="/about" className="hover:text-white transition-colors">About</Link>
+          <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+          <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
         </div>
       </div>
     </footer>

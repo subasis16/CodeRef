@@ -14,6 +14,8 @@ import AIWorkflow from './pages/AIWorkflow';
 import Setup from './pages/Setup';
 import About from './pages/About';
 import Login from './pages/Login';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import { AuthProvider } from './context/AuthContext';
 
 import ScrollToTop from './components/ScrollToTop';
@@ -63,6 +65,8 @@ function App() {
               <Route path="/ai" element={<AIWorkflow />} />
               <Route path="/setup" element={<Setup />} />
               <Route path="/about" element={<About />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
             </Routes>
           </div>
         </SearchWrapper>
