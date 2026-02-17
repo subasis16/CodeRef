@@ -15,12 +15,13 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (location.state?.tab && currentTab !== location.state.tab) {
-      setCurrentTab(location.state.tab); // eslint-disable-line react-hooks/set-state-in-effect
-    } else if (location.pathname === '/dashboard' && !location.state?.tab && currentTab !== 'dashboard') {
-      setCurrentTab('dashboard');
+    if (location.state?.tab) {
+      setCurrentTab(location.state.tab);
+    } else if (location.pathname === '/dashboard' && !location.state?.tab) {
+      // Intentionally do nothing here to allow internal state to persist
+      // unless we specifically want to reset on navigation
     }
-  }, [location.state, location.pathname, currentTab]);
+  }, [location.state, location.pathname]);
 
   const documentationLinks = [
     { name: 'Tailwind CSS', url: 'https://tailwindcss.com/docs', icon: <SiTailwindcss />, desc: 'Utility-first CSS framework.' },

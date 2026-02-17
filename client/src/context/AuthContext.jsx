@@ -50,6 +50,9 @@ export const AuthProvider = ({ children }) => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/login`,
+        },
       });
       if (error) console.error("Sign up error:", error);
       else console.log("Sign up success:", data);
