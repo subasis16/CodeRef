@@ -8,19 +8,19 @@ import { useLocation, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 
 const Dashboard = () => {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentTab, setCurrentTab] = useState(location.state?.tab || 'dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (location.state?.tab) {
-      setCurrentTab(location.state.tab);
-    } else if (location.pathname === '/dashboard') {
+    if (location.state?.tab && currentTab !== location.state.tab) {
+      setCurrentTab(location.state.tab); // eslint-disable-line react-hooks/set-state-in-effect
+    } else if (location.pathname === '/dashboard' && !location.state?.tab && currentTab !== 'dashboard') {
       setCurrentTab('dashboard');
     }
-  }, [location.state, location.pathname]);
+  }, [location.state, location.pathname, currentTab]);
 
   const documentationLinks = [
     { name: 'Tailwind CSS', url: 'https://tailwindcss.com/docs', icon: <SiTailwindcss />, desc: 'Utility-first CSS framework.' },

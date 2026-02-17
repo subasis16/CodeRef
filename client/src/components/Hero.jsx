@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Hero = () => {
+  const [particles, setParticles] = useState([]);
+
+  useEffect(() => {
+    const newParticles = [...Array(15)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      width: `${Math.random() * 3 + 1}px`,
+      height: `${Math.random() * 3 + 1}px`,
+      duration: `${Math.random() * 10 + 10}s`,
+      opacity: Math.random() * 0.5 + 0.1,
+      delay: `${Math.random() * 5}s`
+    }));
+    setParticles(newParticles); // eslint-disable-line react-hooks/set-state-in-effect
+  }, []);
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 sm:pt-24 px-4 sm:px-6">
       {/* Premium Background Elements */}
@@ -12,17 +26,17 @@ const Hero = () => {
 
       {/* Floating Particles Generator */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+        {particles.map((style, i) => (
           <div
             key={i}
             className="particle"
             style={{
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 3 + 1}px`, // 1px to 4px
-              height: `${Math.random() * 3 + 1}px`,
-              '--duration': `${Math.random() * 10 + 10}s`, // 10s to 20s
-              '--opacity': Math.random() * 0.5 + 0.1,
-              animationDelay: `${Math.random() * 5}s`
+              left: style.left,
+              width: style.width,
+              height: style.height,
+              '--duration': style.duration,
+              '--opacity': style.opacity,
+              animationDelay: style.delay
             }}
           ></div>
         ))}
