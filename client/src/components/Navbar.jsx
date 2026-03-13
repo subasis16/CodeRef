@@ -109,8 +109,8 @@ const Navbar = () => {
           <Link to="/tools" className={`text-lg font-medium ${isActive('/tools')}`} onClick={() => setMobileMenuOpen(false)}>Tools</Link>
           <div className="h-px bg-white/5 w-full my-2"></div>
           {user ? (
-            <Link to="/dashboard" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
-              Dashboard
+            <Link to="/dashboard" state={{ tab: 'snippets' }} className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
+              My Snippets
             </Link>
           ) : (
             <Link to="/login" className="bg-ossium-accent text-ossium-darker px-4 py-3 rounded-md text-center font-bold hover:bg-ossium-accent-hover" onClick={() => setMobileMenuOpen(false)}>
