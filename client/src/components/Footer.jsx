@@ -9,11 +9,7 @@ const Footer = () => {
         {/* Brand */}
         <div className="col-span-2 md:col-span-2">
           <Link to="/" className="flex items-center gap-2 mb-6 w-max">
-            <div className="w-6 h-6 bg-ossium-accent rounded flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="#0a0a0a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+
             <span className="text-white font-bold text-lg">CodeFetch</span>
           </Link>
           <p className="text-ossium-muted max-w-sm mb-6">
