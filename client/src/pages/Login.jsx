@@ -15,7 +15,12 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
 
-  if (user) {
+  // Check if we are currently in a password recovery flow
+  const isRecoveryMode = window.location.hash.includes('type=recovery') || 
+                         window.location.search.includes('type=recovery') ||
+                         window.location.href.includes('recovery');
+
+  if (user && !isRecoveryMode) {
     return <Navigate to="/dashboard" replace />;
   }
 

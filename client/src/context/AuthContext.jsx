@@ -18,9 +18,18 @@ export const AuthProvider = ({ children }) => {
     });
 
     // Listen for changes on auth state (logged in, signed out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
+      
+      // If we detect a password recovery event, redirect to the reset page
+      if (event === 'PASSWORD_RECOVERY') {
+        const isAlreadyOnResetPage = window.location.pathname.includes('/reset-password');
+        if (!isAlreadyOnResetPage) {
+          window.location.href = `${window.location.origin}/reset-password`;
+        }
+      }
+      
       setLoading(false);
     });
 
