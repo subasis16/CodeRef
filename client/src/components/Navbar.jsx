@@ -40,9 +40,9 @@ const Navbar = () => {
 
       {/* Centered Desktop Navigation */}
       <div className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-7 text-[10px] uppercase text-white/70 transition-all duration-500 ${scrolled ? 'top-[70%] opacity-100 scale-95' : 'top-[64%] opacity-80'}`}>
-        <Link to="/cheatsheets" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/cheatsheets' ? 'text-white' : ''}`}>Cheat Sheets +</Link>
-        <Link to="/languages" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/languages' ? 'text-white' : ''}`}>Languages +</Link>
-        <Link to="/roadmap" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/roadmap' ? 'text-white' : ''}`}>Blueprint +</Link>
+        <Link to="/cheatsheets" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/cheatsheets' ? 'text-white' : ''}`}>Cheat Sheets</Link>
+        <Link to="/languages" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/languages' ? 'text-white' : ''}`}>Languages</Link>
+        <Link to="/roadmap" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/roadmap' ? 'text-white' : ''}`}>Blueprint</Link>
         <Link to="/setup" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/setup' ? 'text-white' : ''}`}>Setup</Link>
         <Link to="/errors" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/errors' ? 'text-white' : ''}`}>Bugs & Fixes</Link>
         <Link to="/tools" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/tools' ? 'text-white' : ''}`}>Tools</Link>
