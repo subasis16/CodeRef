@@ -5,6 +5,15 @@ import { useAuth } from '../context/useAuth';
 
 const parseContent = (contentRaw) => {
   if (!contentRaw) return { text: '', links: [], pdfUrl: '' };
+  
+  if (typeof contentRaw === 'object') {
+    return {
+      text: contentRaw.text || '',
+      links: Array.isArray(contentRaw.links) ? contentRaw.links : [],
+      pdfUrl: contentRaw.pdfUrl || ''
+    };
+  }
+
   try {
     const parsed = JSON.parse(contentRaw);
     if (parsed && typeof parsed === 'object' && ('text' in parsed || 'links' in parsed || 'pdfUrl' in parsed)) {
@@ -17,7 +26,7 @@ const parseContent = (contentRaw) => {
   } catch (e) {
     // legacy text format
   }
-  return { text: contentRaw, links: [], pdfUrl: '' };
+  return { text: typeof contentRaw === 'string' ? contentRaw : '', links: [], pdfUrl: '' };
 };
 
 const Notes = () => {
@@ -121,10 +130,32 @@ const Notes = () => {
 
     try {
       setSaving(true);
+      
+      let finalLinks = [...editLinks];
+      
+      // Auto-add pending link if user typed but forgot to click "Add Link"
+      if (newLinkTitle.trim() && newLinkUrl.trim()) {
+        let finalUrl = newLinkUrl.trim();
+        if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+          finalUrl = 'https://' + finalUrl;
+        }
+        finalLinks.push({ title: newLinkTitle.trim(), url: finalUrl });
+        setEditLinks(finalLinks);
+        setNewLinkTitle('');
+        setNewLinkUrl('');
+      }
+
+      // Auto-fix Google Drive links for embedding properly
+      let finalPdfUrl = editPdfUrl;
+      if (finalPdfUrl && finalPdfUrl.includes('drive.google.com/file/d/')) {
+        finalPdfUrl = finalPdfUrl.replace(/\/view.*$/, '/preview');
+        setEditPdfUrl(finalPdfUrl);
+      }
+
       const updatedContent = JSON.stringify({
         text: editContent,
-        links: editLinks,
-        pdfUrl: editPdfUrl
+        links: finalLinks,
+        pdfUrl: finalPdfUrl
       });
       
       const updates = {
@@ -146,6 +177,7 @@ const Notes = () => {
           : note
       );
       setNotes(updatedNotes);
+      setActiveNote({ ...activeNote, ...updates });
     } catch (error) {
       console.error('Error updating note:', error.message);
     } finally {
