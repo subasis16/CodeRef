@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 px-4 sm:px-6 bg-[#050505] overflow-hidden">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center pt-24 pb-8 sm:pb-12 px-4 sm:px-6 bg-[#050505] overflow-hidden">
       {/* Subtle Grid Pattern */}
       <div className="absolute inset-0 bg-grid-pattern z-0 pointer-events-none opacity-80"></div>
 
@@ -46,7 +46,7 @@ const Hero = () => {
       </div>
 
       {/* Tech Stack Ticker */}
-      <div className="relative z-10 mt-auto pt-16 w-full max-w-5xl">
+      <div className="relative z-10 mt-16 sm:mt-auto pt-8 sm:pt-16 pb-8 w-full max-w-5xl">
         <p className="text-xs text-ossium-muted text-center mb-8 uppercase tracking-[0.3em] font-semibold">
           Powering developers working with
         </p>
