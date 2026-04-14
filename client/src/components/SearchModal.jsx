@@ -28,6 +28,7 @@ const SearchModal = ({ isOpen, onClose }) => {
     { title: 'Tools & Utilities', type: 'Resource', path: '/tools', icon: <FiSettings /> },
     { title: 'Bugs & Fixes', type: 'Database', path: '/errors', icon: <FiCpu /> },
     { title: 'Blueprint / Roadmap', type: 'Planning', path: '/roadmap', icon: <FiMap /> },
+    { title: 'System Design', type: 'Architecture', path: '/system-design', icon: <FiServer /> },
     { title: 'Environment Setup', type: 'Configuration', path: '/setup', icon: <FiServer /> },
     { title: 'Core Fundamentals', type: 'Academic', path: '/fundamentals', icon: <FiLayout /> },
     { title: 'About CodeFetch', type: 'Information', path: '/about', icon: <FiInfo /> },

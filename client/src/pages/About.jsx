@@ -20,13 +20,13 @@ const About = () => {
             <p className="text-ossium-muted text-lg">A solo developer passionate about solving real problems</p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 md:p-10 flex flex-col md:flex-row items-center md:items-start gap-8 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)] transform hover:-translate-y-1 transition-transform duration-300 animate-scale-in">
+          <div className="bg-[#121212] border border-white/5 rounded-xl p-6 md:p-10 flex flex-col md:flex-row items-center md:items-start gap-8 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.02)] transform hover:-translate-y-1 transition-transform duration-300 animate-scale-in">
 
             <div className="flex-1 text-center md:text-left">
-              <h3 className="text-3xl font-black text-black mb-2 uppercase tracking-tight">Subasis Panigrahi</h3>
+              <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Subasis Panigrahi</h3>
               <p className="text-orange-500 font-bold mb-6 font-mono text-base">Founder & Full Stack Developer</p>
 
-              <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+              <p className="text-ossium-muted mb-8 leading-relaxed text-lg">
                 Building CodeFetch from ground up — designing, coding, and shipping every feature. Passionate about creating technology that empowers developers and streamlines their workflow.
               </p>
 
@@ -42,11 +42,11 @@ const About = () => {
               </div>
 
               {/* Tech Stack Section */}
-              <div className="pt-6 border-t border-gray-200">
-                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Built With</h4>
+              <div className="pt-6 border-t border-white/5">
+                <h4 className="text-sm font-bold text-white/20 uppercase tracking-widest mb-4">Built With</h4>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                   {techStack.map((tech) => (
-                    <span key={tech} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded border border-gray-200">
+                    <span key={tech} className="px-3 py-1 bg-white/5 text-ossium-muted text-xs font-bold rounded border border-white/5">
                       {tech}
                     </span>
                   ))}

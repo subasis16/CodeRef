@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -121,7 +120,6 @@ const Tools = () => {
             <p className="text-xl">No tools found.</p>
           </div>
         )}
-
       </main>
       <Footer />
     </div>

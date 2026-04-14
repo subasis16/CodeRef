@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiFileText, FiLayout, FiServer, FiCpu, FiGitBranch, FiTerminal, FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight } from 'react-icons/fi';
 
 const categories = [
-  { id: 'cheatsheets', name: 'Cheat Sheets', icon: <FiFileText />, desc: 'Quick references, Syntax guides', path: '/cheatsheets' },
-  { id: 'frontend', name: 'Frontend', icon: <FiLayout />, desc: 'React, Vue, Tailwind', path: '/languages' },
-  { id: 'backend', name: 'Backend', icon: <FiServer />, desc: 'Node, Go, Python', path: '/languages' },
-  { id: 'ai', name: 'AI Engineering', icon: <FiCpu />, desc: 'LLMs, RAG, LangChain', path: '/ai' },
-  { id: 'git', name: 'Git & DevOps', icon: <FiGitBranch />, desc: 'Commands, Workflows', path: '/cheatsheets' },
-  { id: 'terminal', name: 'Terminal', icon: <FiTerminal />, desc: 'Zsh, Bash, Powershell', path: '/cheatsheets' },
+  { id: 'docs', name: 'Documentation Page', desc: 'Primary guides and official references', path: '/documentation' },
+  { id: 'ai', name: 'AI Engineering', desc: 'LLMs, RAG, and AI development patterns', path: '/ai' },
+  { id: 'system-design', name: 'System Design', desc: 'Interactive architectural diagrams', path: '/system-design' },
+  { id: 'setup', name: 'Setup', desc: 'Environment and tooling configuration', path: '/setup' },
+  { id: 'blueprint', name: 'Blueprint', desc: 'Modern engineering roadmaps', path: '/roadmap' },
+  { id: 'fundamentals', name: 'Core Fundamentals Page', desc: 'Pillars of software engineering', path: '/fundamentals' },
 ];
 
 const CategoryCards = () => {
@@ -27,13 +27,11 @@ const CategoryCards = () => {
             <Link
               key={category.id}
               to={category.path}
+              state={category.state}
               className="group relative p-6 sm:p-8 bg-[#0f0f0f] rounded-xl border border-white/5 hover:border-ossium-accent/30 transition-all duration-300 hover:-translate-y-1 active:scale-[0.98]"
             >
               <div className="flex flex-col h-full justify-between">
                 <div>
-                  <div className="text-ossium-accent mb-4 sm:mb-6 text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300 origin-left">
-                    {category.icon}
-                  </div>
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-ossium-accent transition-colors">
                     {category.name}
                   </h3>

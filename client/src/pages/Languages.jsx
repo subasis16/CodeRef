@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
-import { FiSearch, FiAlertTriangle, FiCode, FiLayers, FiZap } from 'react-icons/fi';
+import { FiSearch, FiCode, FiLayers } from 'react-icons/fi';
 import { languagesData } from '../data/languages';
 
 const Languages = () => {
@@ -103,25 +103,9 @@ const Languages = () => {
                   </code>
                 </div>
 
-                <div className="flex items-start gap-3 pt-2">
-                  <FiAlertTriangle className="text-red-400 shrink-0 mt-0.5" size={14} />
-                  <div>
-                    <p className="text-[10px] uppercase text-red-400 font-bold tracking-wider mb-0.5">Watch Out</p>
-                    <p className="text-xs text-ossium-muted">{item.mistakes}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 pt-3 mt-3 border-t border-white/5 bg-yellow-500/5 p-2 rounded">
-                  <FiZap className="text-yellow-400 shrink-0 mt-0.5" size={14} />
-                  <div>
-                    <p className="text-[10px] uppercase text-yellow-400 font-bold tracking-wider mb-0.5">Pro Tip</p>
-                    <p className="text-xs text-ossium-muted">{item.expert_tip}</p>
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-ossium-accent group-hover:text-white transition-colors duration-300">
-                  <span className="text-sm font-medium">View Guide & Notes</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-ossium-accent group-hover:text-white transition-colors duration-300">
+                  <span className="text-sm font-black uppercase tracking-widest">Notes</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </div>
               </div>
             </Link>

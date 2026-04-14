@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Notes from '../components/Notes';
-import { SiTailwindcss, SiReact, SiNodedotjs, SiPython, SiTypescript, SiDocker, SiGit, SiMongodb, SiGo, SiRust, SiGraphql } from 'react-icons/si';
 import { FiSearch, FiBook, FiLayout, FiZap, FiMenu, FiUser, FiLogOut, FiShield, FiClock } from 'react-icons/fi';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import { supabase } from '../lib/supabaseClient';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -13,6 +13,77 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentTab, setCurrentTab] = useState(location.state?.tab || 'dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(user?.user_metadata?.avatar_url || null);
+
+  useEffect(() => {
+    if (user?.user_metadata?.avatar_url) {
+      setAvatarUrl(user.user_metadata.avatar_url);
+    }
+  }, [user]);
+
+  const uploadAvatar = async (event) => {
+    try {
+      setUploading(true);
+      if (!event.target.files || event.target.files.length === 0) {
+        throw new Error('You must select an image to upload.');
+      }
+
+      const file = event.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      // Upload image to 'avatars' bucket
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update user metadata
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: { avatar_url: publicUrl }
+      });
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      setAvatarUrl(publicUrl);
+      alert('Profile picture updated!');
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeAvatar = async () => {
+    try {
+      setUploading(true);
+      
+      const { error } = await supabase.auth.updateUser({
+        data: { avatar_url: null }
+      });
+
+      if (error) throw error;
+
+      setAvatarUrl(null);
+      alert('Profile picture removed.');
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     if (location.state?.tab) {
@@ -23,28 +94,7 @@ const Dashboard = () => {
     }
   }, [location.state, location.pathname]);
 
-  const documentationLinks = [
-    { name: 'Tailwind CSS', url: 'https://tailwindcss.com/docs', icon: <SiTailwindcss className="text-[#06B6D4]" />, desc: 'Utility-first CSS framework.' },
-    { name: 'React', url: 'https://react.dev', icon: <SiReact className="text-[#61DAFB]" />, desc: 'The library for web and native user interfaces.' },
-    { name: 'Node.js', url: 'https://nodejs.org/en/docs', icon: <SiNodedotjs className="text-[#339933]" />, desc: 'JavaScript runtime built on Chrome\'s V8 engine.' },
-    { name: 'Vite', url: 'https://vitejs.dev/guide/', icon: <FiZap className="text-[#646CFF]" />, desc: 'Next Generation Frontend Tooling.' },
-    { name: 'Next.js', url: 'https://nextjs.org/docs', icon: <FiLayout className="text-white" />, desc: 'The React Framework for the Web.' },
-    { name: 'Vue.js', url: 'https://vuejs.org/guide/introduction.html', icon: <FiLayout className="text-[#4FC08D]" />, desc: 'The Progressive JavaScript Framework.' },
-    { name: 'Python', url: 'https://docs.python.org/3/', icon: <SiPython className="text-[#3776AB]" />, desc: 'The Python Language Reference.' },
-    { name: 'MDN Web Docs', url: 'https://developer.mozilla.org', icon: <FiBook className="text-white" />, desc: 'Resources for developers, by developers.' },
-    { name: 'TypeScript', url: 'https://www.typescriptlang.org/docs/', icon: <SiTypescript className="text-[#3178C6]" />, desc: 'Typed JavaScript at Any Scale.' },
-    { name: 'Docker', url: 'https://docs.docker.com/', icon: <SiDocker className="text-[#2496ED]" />, desc: 'Platform for developing, shipping, and running applications.' },
-    { name: 'Git', url: 'https://git-scm.com/doc', icon: <SiGit className="text-[#F05032]" />, desc: 'Free and open source distributed version control system.' },
-    { name: 'MongoDB', url: 'https://www.mongodb.com/docs/', icon: <SiMongodb className="text-[#47A248]" />, desc: 'The developer data platform.' },
-    { name: 'Go', url: 'https://go.dev/doc/', icon: <SiGo className="text-[#00ADD8]" />, desc: 'Open source programming language.' },
-    { name: 'Rust', url: 'https://doc.rust-lang.org/', icon: <SiRust className="text-white" />, desc: 'A language empowering everyone to build reliable software.' },
-    { name: 'GraphQL', url: 'https://graphql.org/learn/', icon: <SiGraphql className="text-[#E10098]" />, desc: 'A query language for your API.' },
-  ];
 
-  if (!user && currentTab !== 'docs') {
-    // If not logged in and not looking at docs, show the login prompt nicely
-    // tailored for the dashboard home
-  }
 
   return (
     <div className="min-h-screen bg-ossium-darker text-ossium-text flex">
@@ -67,21 +117,8 @@ const Dashboard = () => {
                 >
                   <FiMenu size={24} />
                 </button>
-                <h1 className="text-2xl font-bold capitalize text-white">{currentTab === 'docs' ? 'Documentation' : (currentTab === 'dashboard' ? 'My Profile' : currentTab)}</h1>
+                <h1 className="text-2xl font-bold capitalize text-white">{currentTab === 'dashboard' ? 'My Profile' : currentTab}</h1>
               </div>
-
-              {currentTab === 'docs' && (
-                <div className="relative w-full sm:w-64 md:w-96 group">
-                  <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-ossium-muted group-focus-within:text-ossium-accent transition-colors" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search docs..."
-                    className="w-full bg-[#1A1A1A] border border-white/5 rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-ossium-accent/50 transition-colors placeholder:text-ossium-muted/50 cursor-pointer text-white"
-                  />
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -96,11 +133,51 @@ const Dashboard = () => {
                 <div className="w-full max-w-4xl space-y-12">
                   {/* Classic Profile Header */}
                   <div className="flex flex-col md:flex-row items-center gap-8 pb-12 border-b border-white/5">
-                    <div className="w-32 h-32 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-4xl font-light text-white overflow-hidden shadow-2xl">
-                      {user.email?.charAt(0).toUpperCase()}
+                    <div className="relative group/avatar">
+                      <div className="w-32 h-32 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-4xl font-light text-white overflow-hidden shadow-2xl relative">
+                        {uploading ? (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-10">
+                            <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          </div>
+                        ) : null}
+                        
+                        {avatarUrl ? (
+                          <img 
+                            src={avatarUrl} 
+                            alt="Profile" 
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" 
+                          />
+                        ) : (
+                          <FiUser size={48} className="text-white/20" />
+                        )}
+
+                        <label 
+                          htmlFor="avatar-upload" 
+                          className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer text-[10px] font-bold uppercase tracking-widest text-white gap-2"
+                        >
+                          <FiUser size={20} />
+                          Change
+                        </label>
+                      </div>
+                      <input
+                        type="file"
+                        id="avatar-upload"
+                        accept="image/*"
+                        onChange={uploadAvatar}
+                        disabled={uploading}
+                        className="hidden"
+                      />
                     </div>
-                    <div className="text-center md:text-left space-y-1">
-                      <p className="text-white/40 font-mono text-sm tracking-widest">{user.email}</p>
+                    <div className="text-center md:text-left space-y-2">
+                      <p className="text-white/40 font-mono text-xs tracking-widest">{user.email}</p>
+                      {avatarUrl && (
+                        <button 
+                          onClick={removeAvatar}
+                          className="text-[10px] uppercase tracking-[0.2em] text-red-400/50 hover:text-red-400 transition-colors font-bold"
+                        >
+                          Remove Photo
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -142,41 +219,6 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Documentation Grid */}
-          {currentTab === 'docs' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {documentationLinks
-                .filter(doc => doc.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                .map((doc) => (
-                  <a
-                    key={doc.name}
-                    href={doc.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative bg-[#121212] border border-white/5 rounded-xl p-6 hover:border-ossium-accent/30 transition-all duration-300 hover:bg-white/[0.02]"
-                  >
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform text-white">
-                        {doc.icon}
-                      </div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-ossium-accent transition-colors">
-                        {doc.name}
-                      </h3>
-                    </div>
-
-                    <p className="text-sm text-ossium-muted mb-4 leading-relaxed h-10">
-                      {doc.desc}
-                    </p>
-
-                    <div className="flex items-center text-xs font-mono text-ossium-accent opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-                      Read Documentation &rarr;
-                    </div>
-                  </a>
-                ))}
-            </div>
-          )}
-
-
           {/* Notes Section */}
           {currentTab === 'notes' && (
             user ? (
@@ -201,7 +243,7 @@ const Dashboard = () => {
           )}
 
           {/* Work in progress placeholder for other tabs */}
-          {currentTab !== 'dashboard' && currentTab !== 'docs' && currentTab !== 'notes' && (
+          {currentTab !== 'dashboard' && currentTab !== 'notes' && (
             <div className="flex flex-col items-center justify-center py-20 text-ossium-muted">
               <h3 className="text-xl font-bold text-white mb-2">Work in Progress</h3>
               <p>The {currentTab} section is currently under development.</p>

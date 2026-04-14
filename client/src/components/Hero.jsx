@@ -36,11 +36,10 @@ const Hero = () => {
             Dashboard
           </Link>
           <Link 
-            to="/dashboard" 
-            state={{ tab: 'docs' }} 
+            to="/cheatsheets" 
             className="w-full sm:w-auto px-10 py-3.5 bg-[#121212] border border-white/10 text-white font-bold rounded-lg hover:bg-[#1a1a1a] hover:border-white/20 active:scale-[0.98] transition-all duration-300 text-center"
           >
-            View Documentation
+            Explore Cheatsheets
           </Link>
         </div>
       </div>

@@ -6,49 +6,21 @@ import { fundamentalsData } from '../data/fundamentals';
 import { FiCode, FiArrowRight, FiBookOpen } from 'react-icons/fi';
 
 const Fundamentals = () => {
-  const { hash } = useLocation();
   const [activeSection, setActiveSection] = useState(fundamentalsData[0].id);
 
+  const activeData = fundamentalsData.find(s => s.id === activeSection) || fundamentalsData[0];
+
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, { rootMargin: '-20% 0px -60% 0px' });
-
-    fundamentalsData.forEach(s => {
-      const el = document.getElementById(s.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
+    window.scrollTo(0, 0);
   }, []);
-
-  useEffect(() => {
-    if (hash) {
-      const id = hash.replace('#', '');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  }, [hash]);
 
   return (
     <div className="min-h-screen bg-black text-white font-sans flex flex-col selection:bg-white selection:text-black">
       <Navbar />
 
-      <main className="flex-1 pt-40 px-6 pb-32">
+      <main className="flex-1 pt-32 px-6 pb-32">
         {/* Hero Section */}
         <div className="max-w-4xl mx-auto mb-24 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-8">
-            <FiBookOpen className="text-white/60" />
-            <span>Core Knowledge</span>
-          </div>
           <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter leading-[0.9]">
             PROGRAMMING <br />
             <span className="text-white/20">FUNDAMENTALS</span>
@@ -58,66 +30,51 @@ const Fundamentals = () => {
           </p>
         </div>
 
-        {/* Quick Nav */}
-        <div className="sticky top-24 z-40 mb-20 pointer-events-none">
-          <div className="max-w-6xl mx-auto flex justify-center">
-            <div className="pointer-events-auto bg-black/60 backdrop-blur-xl border border-white/10 p-1.5 rounded-full flex gap-1 shadow-2xl overflow-x-auto no-scrollbar max-w-full">
-              {fundamentalsData.map(section => (
-                <a
-                  key={section.id}
-                  href={`#${section.id}`}
-                  className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 whitespace-nowrap ${
-                    activeSection === section.id
-                      ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]'
-                      : 'text-white/40 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {section.title}
-                </a>
-              ))}
-            </div>
+        {/* Tabs Navigation (Pills format) */}
+        <div className="max-w-[1400px] mx-auto mb-16 px-6">
+          <div className="flex flex-wrap justify-center gap-3">
+            {fundamentalsData.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 border ${
+                  activeSection === section.id
+                    ? 'bg-white text-black border-white shadow-[0_0_30px_rgba(255,255,255,0.3)] scale-105'
+                    : 'bg-[#111] text-white/50 border-white/5 hover:border-white/20 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {section.title}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Timeline Content */}
-        <div className="max-w-4xl mx-auto relative px-4 sm:px-0">
-          {/* Vertical Connecting Line */}
-          <div className="absolute left-[23px] sm:left-[31px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-white/20 via-white/5 to-transparent pointer-events-none" />
+        {/* Content Section for Active Tab */}
+        <div className="max-w-4xl mx-auto relative px-4 sm:px-0 animate-fade-in-down" key={activeSection}>
 
           <div className="space-y-32">
-            {fundamentalsData.map((section, sIdx) => (
-              <div key={section.id} id={section.id} className="relative scroll-mt-48 group">
+            <div className="relative group">
                 
-                {/* Section Header with Number */}
+                {/* Section Header */}
                 <div className="flex items-start gap-6 sm:gap-10 mb-12">
-                  <div className={`relative z-10 w-12 h-12 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center rounded-2xl border transition-all duration-500 font-mono text-sm sm:text-lg font-black tracking-tighter shadow-2xl ${
-                    activeSection === section.id 
-                    ? 'bg-white text-black border-white scale-110' 
-                    : 'bg-black border-white/10 text-white/20 group-hover:border-white/30 group-hover:text-white/40'
-                  }`}>
-                    {(sIdx + 1).toString().padStart(2, '0')}
-                    {activeSection === section.id && (
-                      <div className="absolute inset-0 rounded-2xl bg-white/20 blur-xl animate-pulse" />
-                    )}
+                  <div className="relative z-10 w-12 h-12 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center rounded-2xl border transition-all duration-500 font-mono text-sm sm:text-lg font-black tracking-tighter shadow-2xl bg-white text-black border-white scale-110">
+                    {fundamentalsData.findIndex(s => s.id === activeSection) + 1}
+                    <div className="absolute inset-0 rounded-2xl bg-white/20 blur-xl animate-pulse" />
                   </div>
                   
                   <div className="pt-2">
-                    <h2 className={`text-3xl sm:text-5xl font-black tracking-tighter mb-4 transition-all duration-500 ${
-                      activeSection === section.id ? 'text-white translate-x-1' : 'text-white/20 group-hover:text-white/40'
-                    }`}>
-                      {section.title}
+                    <h2 className="text-3xl sm:text-5xl font-black tracking-tighter mb-4 transition-all duration-500 text-white translate-x-1">
+                      {activeData.title}
                     </h2>
-                    <p className={`text-base sm:text-lg max-w-2xl leading-relaxed transition-all duration-500 ${
-                      activeSection === section.id ? 'text-white/60' : 'text-white/10 group-hover:text-white/20'
-                    }`}>
-                      {section.description}
+                    <p className="text-base sm:text-lg max-w-2xl leading-relaxed transition-all duration-500 text-white/60">
+                      {activeData.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Sub-items list */}
                 <div className="pl-[68px] sm:pl-[106px] space-y-20">
-                  {section.items.map((item, iIdx) => (
+                  {activeData.items.map((item, iIdx) => (
                     <div key={iIdx} className="relative group/item">
                       <div className="mb-6">
                         <h3 className="text-xl sm:text-2xl font-black text-white/90 mb-3 group-hover/item:text-white transition-colors">
@@ -157,34 +114,9 @@ const Fundamentals = () => {
                   ))}
                 </div>
               </div>
-            ))}
           </div>
         </div>
 
-        {/* Global CTA */}
-        <div className="max-w-4xl mx-auto mt-40">
-          <div className="relative p-8 sm:p-12 rounded-[2rem] bg-white text-black overflow-hidden group">
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-              <div>
-                <h3 className="text-3xl sm:text-4xl font-black tracking-tighter leading-none mb-4">
-                  READY TO BUILD?
-                </h3>
-                <p className="text-black/60 font-bold text-sm sm:text-base">
-                  Put your fundamental knowledge <br /> to use in real projects.
-                </p>
-              </div>
-              <a 
-                href="/cheatsheets" 
-                className="inline-flex items-center gap-4 px-10 py-5 bg-black text-white rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-2xl"
-              >
-                Explore Docs
-                <FiArrowRight />
-              </a>
-            </div>
-            {/* Background Decoration */}
-            <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-black/[0.03] rounded-full group-hover:scale-150 transition-transform duration-1000" />
-          </div>
-        </div>
       </main>
 
       <Footer />

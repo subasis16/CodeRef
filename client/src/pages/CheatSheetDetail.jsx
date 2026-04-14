@@ -518,7 +518,7 @@ const CheatSheetDetail = () => {
           title: "Memory Management",
           items: [
             { label: "Dynamic Alloc", code: "int* p = new int(5);\ndelete p;" },
-            { label: "Smart Pointers", code: "auto p = std::make_unique<Data>();\nstd::shared_ptr<Data> p2 = p1;" }
+            { label: "Smart Pointers", code: "auto p = std::make_unique<Data>();\nauto sp = std::make_shared<Data>();\nauto sp2 = sp; // shared_ptr can be copied" }
           ]
         }
       ]

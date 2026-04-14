@@ -43,8 +43,6 @@ const Navbar = () => {
       <div className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-7 text-[10px] uppercase text-white/70 transition-all duration-500 ${scrolled ? 'top-[70%] opacity-100 scale-95' : 'top-[64%] opacity-80'}`}>
         <Link to="/cheatsheets" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/cheatsheets' ? 'text-white' : ''}`}>Cheat Sheets</Link>
         <Link to="/languages" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/languages' ? 'text-white' : ''}`}>Languages</Link>
-        <Link to="/roadmap" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/roadmap' ? 'text-white' : ''}`}>Blueprint</Link>
-        <Link to="/setup" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/setup' ? 'text-white' : ''}`}>Setup</Link>
         <Link to="/errors" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/errors' ? 'text-white' : ''}`}>Bugs & Fixes</Link>
         <Link to="/tools" className={`transition-colors whitespace-nowrap hover:text-white ${location.pathname === '/tools' ? 'text-white' : ''}`}>Tools</Link>
       </div>
@@ -94,28 +92,26 @@ const Navbar = () => {
 
     {/* Mobile Menu Overlay */}
     {mobileMenuOpen && (
-      <div className="fixed inset-0 bg-black/98 backdrop-blur-3xl z-[100] flex flex-col items-center justify-center p-8 lg:hidden animate-fade-in overflow-y-auto">
+      <div className="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center p-4 lg:hidden animate-fade-in overflow-y-auto">
         <button 
           onClick={() => setMobileMenuOpen(false)}
-          className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+          className="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors"
         >
-          <FiX size={32} />
+          <FiX size={28} />
         </button>
         
-        <div className="flex flex-col items-center gap-8 text-center py-20">
-          <Link to="/cheatsheets" className="text-2xl font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all" onClick={() => setMobileMenuOpen(false)}>Cheat Sheets</Link>
-          <Link to="/languages" className="text-2xl font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all" onClick={() => setMobileMenuOpen(false)}>Languages</Link>
-          <Link to="/roadmap" className="text-2xl font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all" onClick={() => setMobileMenuOpen(false)}>Blueprint</Link>
-          <Link to="/setup" className="text-2xl font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all" onClick={() => setMobileMenuOpen(false)}>Setup</Link>
-          <Link to="/errors" className="text-2xl font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all" onClick={() => setMobileMenuOpen(false)}>Bugs & Fixes</Link>
-          <Link to="/tools" className="text-2xl font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all" onClick={() => setMobileMenuOpen(false)}>Tools</Link>
+        <div className="flex flex-col items-center gap-5 text-center w-full max-w-sm">
+          <Link to="/cheatsheets" className={`text-base font-semibold uppercase tracking-widest transition-all ${location.pathname === '/cheatsheets' ? 'text-white' : 'text-white/70 hover:text-white'}`} onClick={() => setMobileMenuOpen(false)}>Cheat Sheets</Link>
+          <Link to="/languages" className={`text-base font-semibold uppercase tracking-widest transition-all ${location.pathname === '/languages' ? 'text-white' : 'text-white/70 hover:text-white'}`} onClick={() => setMobileMenuOpen(false)}>Languages</Link>
+          <Link to="/errors" className={`text-base font-semibold uppercase tracking-widest transition-all ${location.pathname === '/errors' ? 'text-white' : 'text-white/70 hover:text-white'}`} onClick={() => setMobileMenuOpen(false)}>Bugs & Fixes</Link>
+          <Link to="/tools" className={`text-base font-semibold uppercase tracking-widest transition-all ${location.pathname === '/tools' ? 'text-white' : 'text-white/70 hover:text-white'}`} onClick={() => setMobileMenuOpen(false)}>Tools</Link>
           
-          <div className="h-px bg-white/10 w-24 my-4"></div>
+          <div className="h-px bg-white/20 w-16 my-2"></div>
           
           <Link 
             to={user ? "/dashboard" : "/login"} 
             state={user ? { tab: 'notes' } : {}} 
-            className="bg-white text-black px-12 py-4 rounded-full font-black uppercase tracking-widest shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95 transition-transform"
+            className="bg-white text-black px-10 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-200 transition-all active:scale-95"
             onClick={() => setMobileMenuOpen(false)}
           >
             {user ? "My Notes" : "Login"}

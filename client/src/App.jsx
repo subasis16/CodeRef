@@ -14,6 +14,8 @@ const Roadmap = React.lazy(() => import('./pages/Roadmap'));
 const AIWorkflow = React.lazy(() => import('./pages/AIWorkflow'));
 const Setup = React.lazy(() => import('./pages/Setup'));
 const Fundamentals = React.lazy(() => import('./pages/Fundamentals'));
+const SystemDesign = React.lazy(() => import('./pages/SystemDesign'));
+const Documentation = React.lazy(() => import('./pages/Documentation'));
 const About = React.lazy(() => import('./pages/About'));
 const Login = React.lazy(() => import('./pages/Login'));
 const ResetPassword = React.lazy(() => import('./pages/ResetPassword'));
@@ -51,6 +53,8 @@ function App() {
                   <Route path="/errors" element={<Errors />} />
                   <Route path="/tools" element={<Tools />} />
                   <Route path="/fundamentals" element={<Fundamentals />} />
+                  <Route path="/system-design" element={<SystemDesign />} />
+                  <Route path="/documentation" element={<Documentation />} />
                   <Route path="/roadmap" element={<Roadmap />} />
                   <Route path="/ai" element={<AIWorkflow />} />
                   <Route path="/setup" element={<Setup />} />

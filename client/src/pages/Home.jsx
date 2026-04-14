@@ -16,7 +16,6 @@ function Home() {
         <Hero />
         <CategoryCards />
         <Workflow />
-        <CoreConceptsOverview />
       </main>
       <Footer />
     </>
