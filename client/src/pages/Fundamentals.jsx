@@ -32,12 +32,12 @@ const Fundamentals = () => {
 
         {/* Tabs Navigation (Pills format) */}
         <div className="max-w-[1400px] mx-auto mb-16 px-6">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex sm:flex-wrap sm:justify-center gap-3 overflow-x-auto sm:overflow-x-visible pb-4 sm:pb-0 scrollbar-hide">
             {fundamentalsData.map((section) => (
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 border ${
+                className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 border whitespace-nowrap shrink-0 ${
                   activeSection === section.id
                     ? 'bg-white text-black border-white shadow-[0_0_30px_rgba(255,255,255,0.3)] scale-105'
                     : 'bg-[#111] text-white/50 border-white/5 hover:border-white/20 hover:text-white hover:bg-white/10'
